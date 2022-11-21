@@ -45,6 +45,9 @@ func init() {
 	if err == nil && u.Name != "" && u.Name != u.Username {
 		userAndHostname += " (" + u.Name + ")"
 	}
+
+	// customize Organization Unit
+	userAndHostname = "admin@semlab"
 }
 
 func (m *mkcert) makeCert(hosts []string) {
@@ -64,7 +67,7 @@ func (m *mkcert) makeCert(hosts []string) {
 	tpl := &x509.Certificate{
 		SerialNumber: randomSerialNumber(),
 		Subject: pkix.Name{
-			Organization:       []string{"mkcert development certificate"},
+			Organization:       []string{"semlab development certificate"},
 			OrganizationalUnit: []string{userAndHostname},
 		},
 
@@ -327,13 +330,13 @@ func (m *mkcert) newCA() {
 	tpl := &x509.Certificate{
 		SerialNumber: randomSerialNumber(),
 		Subject: pkix.Name{
-			Organization:       []string{"mkcert development CA"},
+			Organization:       []string{"semlab development CA"},
 			OrganizationalUnit: []string{userAndHostname},
 
 			// The CommonName is required by iOS to show the certificate in the
 			// "Certificate Trust Settings" menu.
 			// https://github.com/FiloSottile/mkcert/issues/47
-			CommonName: "mkcert " + userAndHostname,
+			CommonName: "semlab " + userAndHostname,
 		},
 		SubjectKeyId: skid[:],
 
@@ -364,5 +367,5 @@ func (m *mkcert) newCA() {
 }
 
 func (m *mkcert) caUniqueName() string {
-	return "mkcert development CA " + m.caCert.SerialNumber.String()
+	return "semlab development CA " + m.caCert.SerialNumber.String()
 }
